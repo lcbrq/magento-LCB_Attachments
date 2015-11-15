@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <catalog_product_view>
+        <reference name="product.info">
+            <block type="catalog/product_view_tabs" name="product.info.tabs" as="info_tabs" template="catalog/product/view/tabs.phtml" >
+                <action method="addTab" translate="title" module="catalog">
+                    <alias>attachments</alias>
+                    <title>Attachments</title>
+                    <block>catalog/product_view_attributes</block>
+                    <template helper="lcb_attachments/data/getProductTab"></template>
+                </action>
+            </block> 
+        </reference> 
+    </catalog_product_view>
+</layout>
+    

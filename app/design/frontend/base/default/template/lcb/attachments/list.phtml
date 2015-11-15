@@ -1,0 +1,23 @@
+<?php
+$categories = Mage::getModel('lcb_attachments/category')->getCollection();
+$attachments = Mage::getModel('lcb_attachments/attachment')->getCollection();
+?>
+
+<?php
+foreach ($categories as $category):
+    $attachments = $category->getAttachments();
+    if ($attachments->count() > 0):
+        ?>
+        <h2><?php echo $category->getName(); ?></h2>
+        <?php
+        foreach ($category->getAttachments() as $attachment):
+            ?>
+            <h4>
+                <a href="<?php echo $attachment->getUrl(); ?>">
+            <?php echo $attachment->getTitle(); ?>
+                </a>
+            </h4>
+        <?php endforeach;
+    endif;
+    ?>
+<?php endforeach; ?>

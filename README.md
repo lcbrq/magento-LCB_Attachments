@@ -1,2 +1,3 @@
 # magento-LCB_Attachments
-Magento attachements plugin with attachement type support
+Magento attachments plugin with attachment type and multistore support
+ 

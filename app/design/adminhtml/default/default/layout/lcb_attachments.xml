@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <attachments_adminhtml_attachment_index>
+	<reference name="content">
+	  <block type="lcb_attachments/adminhtml_attachment" name="attachment" />
+	</reference>
+  </attachments_adminhtml_attachment_index>
+  <attachments_adminhtml_attachment_productstab>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="lcb_attachments/adminhtml_attachment_edit_tab_product" name="attachments.attachment.edit.tab.products"/>
+            <block type="adminhtml/widget_grid_serializer" name="products_grid_serializer">
+                <reference name="products_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>attachments.attachment.edit.tab.products</grid_block_name>
+                        <data_callback>_getSelectedProducts</data_callback>
+                        <hidden_input_name>product_ids</hidden_input_name>
+                        <reload_param_name>attachment_products</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </attachments_adminhtml_attachment_productstab>
+     <attachments_adminhtml_attachment_productsgrid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="lcb_attachments/adminhtml_attachment_edit_tab_product" name="attachments.attachment.edit.tab.products"/>
+        </block>
+    </attachments_adminhtml_attachment_productsgrid>
+  <attachments_adminhtml_category_index>
+	<reference name="content">
+	  <block type="lcb_attachments/adminhtml_category" name="category" />
+	</reference>
+  </attachments_adminhtml_category_index>
+</layout>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<adminhtml>
+    <menu>
+        <catalog>
+            <children>
+                <attachments translate="title" module="lcb_attachments">
+                    <title>Attachments</title>
+                    <sort_order>100</sort_order>
+                    <children>
+                        <attachment translate="title" module="lcb_attachments">
+                            <title>Manage Attachments</title>
+                            <sort_order>0</sort_order>
+                            <action>admin_attachments/adminhtml_attachment</action>
+                        </attachment>
+                        <category translate="title" module="lcb_attachments">
+                            <title>Manage Categories</title>
+                            <sort_order>10</sort_order>
+                            <action>admin_attachments/adminhtml_category</action>
+                        </category>
+                    </children>
+                </attachments>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <catalog>
+                        <children>
+                            <attachments translate="title" module="lcb_attachments">
+                                <title>Attachments</title>
+                                <sort_order>1000</sort_order>
+                                <children>
+                                    <attachment translate="title">
+                                        <title>Manage Attachments</title>
+                                        <sort_order>0</sort_order>
+                                    </attachment>
+                                    <category translate="title">
+                                        <title>Manage Categories</title>
+                                        <sort_order>10</sort_order>
+                                    </category>
+                                </children>
+                            </attachments>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</adminhtml>
