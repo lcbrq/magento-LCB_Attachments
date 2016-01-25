@@ -55,7 +55,6 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
                 'name' => 'stores[]',
                 'value' => Mage::app()->getStore(true)->getId()
             ));
-            $model->setStoreId(Mage::app()->getStore(true)->getId());
         }
 
         if (Mage::getSingleton("adminhtml/session")->getAttachmentData()) {

@@ -121,9 +121,8 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                                 $uploader->setFilesDispersion(false);
                                 $destFile = $path . $_FILES['file']['name'];
                                 $filename = $uploader->getNewFileName($destFile);
-                                $uploader->save($path, $filename);
-
-                                $post_data['file'] = str_replace(' ', '_', $filename);
+                                $result = $uploader->save($path, $filename);
+                                $post_data['file'] =  $result['file'];
                             }
                         }
                     }

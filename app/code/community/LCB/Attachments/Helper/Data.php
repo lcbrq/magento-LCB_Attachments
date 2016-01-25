@@ -26,5 +26,15 @@ class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract {
 
         return false;
     }
+    
+    /**
+     * Get all attachments categories
+     * 
+     * @return LCB_Attachments_Model_Resource_Category_Collection
+     */
+    public function getCategories()
+    {
+        return Mage::getModel('lcb_attachments/category')->getCollection();
+    }
 
 }
