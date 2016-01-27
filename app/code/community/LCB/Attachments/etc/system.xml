@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <lcbrq translate="label" module="lcb_attachments">
+            <label>LCBRQ</label>
+            <sort_order>1200</sort_order>
+        </lcbrq>
+    </tabs>
+    <sections>
+        <attachments  translate="label" module="lcb_attachments">                    
+            <label>Attachments</label>
+            <tab>lcbrq</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>0</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>            
+            <groups>
+                <general translate="label"> 
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <thumbnail translate="label">
+                            <label>Default thumbnail image</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="1">catalog/product/watermark</upload_dir>
+                            <base_url type="media" scope_info="1">catalog/product/watermark</base_url>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Default image icon for non image type attachments</comment>
+                        </thumbnail>
+                        <imagick translate="label">
+                            <label>Get the thumbnail image from pdf cover</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Warning, this setting requires Imagick extension installed on your server</comment>
+                        </imagick>
+                    </fields>
+                </general>
+            </groups>
+        </attachments>
+    </sections>
+</config>
