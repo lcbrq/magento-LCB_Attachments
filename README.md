@@ -23,3 +23,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.1.3
 
 * Added support for attachments thumbnails/icons and Imagick support for pdf covers
+
+### 1.1.4
+
+* Fixed image logic, option for both attachments and images download

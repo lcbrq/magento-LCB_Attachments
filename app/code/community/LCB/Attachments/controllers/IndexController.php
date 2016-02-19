@@ -35,16 +35,17 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
     public function GetAction()
     {
+        $productId = $this->getRequest()->getParam('product');
         $ids = $this->getRequest()->getParam('attachments');
         $categoryId = $this->getRequest()->getParam('category');
 
         $attachments = Mage::getModel('lcb_attachments/attachment')->getCollection();
-        
-        if($ids){
-        $attachments->addFieldToFilter('attachment_id', array('in' => $ids));
+
+        if ($ids) {
+            $attachments->addFieldToFilter('attachment_id', array('in' => $ids));
         }
-        
-        if($categoryId){
+
+        if ($categoryId) {
             $attachments->addFieldToFilter('category', $categoryId);
         }
 
@@ -52,8 +53,46 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $zip = new ZipArchive();
         $zip->open($file, ZipArchive::OVERWRITE);
 
+        if ($productId && (!$ids || !$categoryId)) {
+            $attachments = array(); // reset for single
+        }
+
         foreach ($attachments as $attachment) {
             $zip->addFile($attachment->getPath(), $attachment->getFile());
+        }
+
+        $images = array();
+        $imageData = $this->getRequest()->getParam('photos');
+
+        if ($imageData) {
+            foreach ($imageData as $productId => $imagesArray) {
+                $productIds[] = $productId;
+                foreach ($imagesArray as $imageId) {
+                    $photoIds[] = $imageId;
+                }
+            }
+
+            $products = Mage::getModel('catalog/product')->getCollection()
+                    ->addAttributeToFilter('entity_id', array('in' => $productIds));
+
+            foreach ($products as $_product) {
+                $product = Mage::getModel('catalog/product')->load($_product->getId());
+                foreach ($product->getMediaGalleryImages() as $image) {
+                    if (!in_array($image->getId(), $photoIds)) {
+                        continue;
+                    }
+                    $mime = pathinfo($image->getPath(), PATHINFO_EXTENSION);
+                    if (empty($image->getLabel())) {
+                        $image->setLabel($product->getName() . $image->getId());
+                    }
+                    $image->setMime($mime);
+                    $images[] = $image;
+                }
+            }
+        }
+
+        foreach ($images as $image) {
+            $zip->addFile($image->getPath(), $image->getLabel() . '.' . $image->getMime());
         }
 
         $zip->close();

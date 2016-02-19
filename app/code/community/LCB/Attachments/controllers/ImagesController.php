@@ -9,11 +9,39 @@
  */
 class LCB_Attachments_ImagesController extends Mage_Core_Controller_Front_Action {
 
-   
     public function GetAction()
     {
-       
-        $images =  $this->getLayout()->getBlockSingleton('lcb_attachments/index')->getProductImages();
+
+        $imageData = $this->getRequest()->getParam('photos');
+
+        if ($imageData) {
+            foreach ($imageData as $productId => $imagesArray) {
+                $productIds[] = $productId;
+                foreach ($imagesArray as $imageId) {
+                    $photoIds[] = $imageId;
+                }
+            }
+            $products = Mage::getModel('catalog/product')->getCollection()
+                    ->addAttributeToFilter('entity_id', array('in' => $productIds));
+
+            foreach ($products as $_product) {
+                $product = Mage::getModel('catalog/product')->load($_product->getId());
+                foreach ($product->getMediaGalleryImages() as $image) {
+                    if (!in_array($image->getId(), $photoIds)) {
+                        continue;
+                    }
+
+                    $mime = pathinfo($image->getPath(), PATHINFO_EXTENSION);
+                    if (empty($image->getLabel())) {
+                        $image->setLabel($product->getName() . $image->getId());
+                    }
+                    $image->setMime($mime);
+                    $images[] = $image;
+                }
+            }
+        } else {
+            $images = $this->getLayout()->getBlockSingleton('lcb_attachments/index')->getProductImages();
+        }
 
         $file = tempnam("tmp", "zip");
         $zip = new ZipArchive();

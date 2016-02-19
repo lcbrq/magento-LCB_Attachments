@@ -22,7 +22,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
         $subcategoryId = $this->getRequest()->getParam('subcategory');
         $productId = $this->getRequest()->getParam('product');
         $photoIds = $this->getRequest()->getParam('photos');
-        
+
         $products = Mage::getModel('catalog/product')->getCollection()
                 ->addAttributeToSelect('small_image')
                 ->addAttributeToSelect('thumbnail')
@@ -44,26 +44,22 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
         if (!empty($productId)) {
             $products->addAttributeToFilter('entity_id', array('in' => array($this->getRequest()->getParam('product'))));
         }
-        
-        if (!empty($productId)) {
-            $products->addAttributeToFilter('entity_id', array('in' => array($this->getRequest()->getParam('product'))));
-        }
 
-        if(empty($photoIds)){
+        if (empty($photoIds)) {
             $products->getSelect()->order('RAND()');
             $products->getSelect()->limit(16);
         }
-        
+
         foreach ($products as $_product) {
             $product = Mage::getModel('catalog/product')->load($_product->getId());
             foreach ($product->getMediaGalleryImages() as $image) {
 
-                if(!empty($photoIds)){
-                    if(!in_array($image->getId(), $photoIds)){
+                if (!empty($photoIds)) {
+                    if (!in_array($image->getId(), $photoIds)) {
                         continue;
                     }
                 }
-                
+
                 if (empty($image->getLabel())) {
                     $image->setLabel($product->getName());
                 }
@@ -133,8 +129,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
         $products->getSelect()->limit(240);
         return $products;
     }
-    
-    
+
     /**
      * Get attachments within specific category id
      * 
