@@ -17,6 +17,8 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
         'jpeg',
         'png'
     );
+    protected $_enableImagick;
+    protected $_defaultImage;
 
     protected function _construct()
     {
@@ -53,11 +55,15 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
             $filename = substr($this->getFile(), 0, -strlen($extension)) . 'jpg';
 
             if (!file_exists($this->_absolutePath . DS . $filename)) {
-                $imagick = new Imagick($this->getPath() . '[0]');
-                $imagick->setImageFormat('jpeg');
-                $imagick->writeImage($this->_absolutePath . DS . $filename);
-                $imagick->clear();
-                $imagick->destroy();
+                try {
+                    $imagick = new Imagick($this->getPath() . '[0]');
+                    $imagick->setImageFormat('jpeg');
+                    $imagick->writeImage($this->_absolutePath . DS . $filename);
+                    $imagick->clear();
+                    $imagick->destroy();
+                } catch (Exception $e) {
+                    Mage::log($e->getMessage());
+                }
             }
 
             return $this->_urlPath . DS . $filename;

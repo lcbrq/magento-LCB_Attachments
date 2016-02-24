@@ -53,7 +53,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $zip = new ZipArchive();
         $zip->open($file, ZipArchive::OVERWRITE);
 
-        if ($productId && (!$ids || !$categoryId)) {
+        if ($productId && !$ids) {
             $attachments = array(); // reset for single
         }
 
