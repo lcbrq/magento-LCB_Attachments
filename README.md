@@ -31,3 +31,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.1.5
 
 * Minor amends for downloads, pdf cover and Imagick exception support
+
+### 1.1.6
+
+* Added movies support and attachment image resize feature

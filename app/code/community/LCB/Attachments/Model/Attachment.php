@@ -19,6 +19,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     );
     protected $_enableImagick;
     protected $_defaultImage;
+    protected $_defaultImageAbsolute;
 
     protected function _construct()
     {
@@ -26,10 +27,11 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
         $this->_urlPath = $mediaUrl . "attachments";
         $this->_absolutePath = Mage::getBaseDir('media') . DS . "attachments";
         $this->_enableImagick = Mage::getStoreConfig('attachments/general/imagick');
-        $this->_defaultImage =  $mediaUrl . 'catalog' . DS . 'product' . DS . 'watermark' . DS . Mage::getStoreConfig('attachments/general/thumbnail');
+        $this->_defaultImage = $mediaUrl . 'catalog' . DS . 'product' . DS . 'watermark' . DS . Mage::getStoreConfig('attachments/general/thumbnail');
+        $this->_defaultImageAbsolute = Mage::getBaseDir('media') . DS . 'catalog' . DS . 'product' . DS . 'watermark' . DS . Mage::getStoreConfig('attachments/general/thumbnail');
         $this->_init("lcb_attachments/attachment");
     }
-    
+
     /**
      * Get attachment url
      * 
@@ -43,22 +45,27 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     /**
      * Get attachment image
      * 
-     * @return string Image url
+     * @return string $imageUrl
      */
-    public function getImage()
+    public function getImage($resize = false)
     {
 
-        $extension = pathinfo($this->getFile(), PATHINFO_EXTENSION);
+        $imageUrl = null;
+        $imagePath = null;
+        $fileName = $this->getFile();
+
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
 
         if ($this->_enableImagick && $this->getExtension() == "pdf" && class_exists('Imagick')) {
 
-            $filename = substr($this->getFile(), 0, -strlen($extension)) . 'jpg';
+            $fileName = substr($fileName, 0, -strlen($extension)) . 'jpg';
+            $imagePath = $this->_absolutePath . DS . $fileName;
 
-            if (!file_exists($this->_absolutePath . DS . $filename)) {
+            if (!file_exists($imagePath)) {
                 try {
                     $imagick = new Imagick($this->getPath() . '[0]');
                     $imagick->setImageFormat('jpeg');
-                    $imagick->writeImage($this->_absolutePath . DS . $filename);
+                    $imagick->writeImage($imagePath);
                     $imagick->clear();
                     $imagick->destroy();
                 } catch (Exception $e) {
@@ -66,14 +73,33 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
                 }
             }
 
-            return $this->_urlPath . DS . $filename;
+            $imageUrl = $this->_urlPath . DS . $fileName;
         }
 
-        if (in_array($extension, $this->_supportedImages)) {
-            return $this->getUrl();
+        if (!$imageUrl && in_array($extension, $this->_supportedImages)) {
+            $imageUrl = $this->getUrl();
+            $imagePath = $this->getPath();
         }
-        
-        return $this->_defaultImage;
+
+        if (!$imageUrl) {
+            $fileName = basename($this->_defaultImageAbsolute);
+            $imageUrl = $this->_defaultImage;
+            $imagePath = $this->_defaultImageAbsolute;
+        }
+
+        if ($resize) {
+            $width = $resize[0];
+            $height = $resize[1];
+            $resized = $this->_absolutePath . "/resized/$width/$height" . DS . $fileName;
+            if (!file_exists($resized) && file_exists($imagePath)) {
+                $image = new Varien_Image($imagePath);
+                $image->resize($width, $height);
+                $image->save($resized);
+            }
+            $imageUrl = $this->_urlPath . "/resized/$width/$height" . DS . $fileName;
+        }
+
+        return $imageUrl;
     }
 
     /**
