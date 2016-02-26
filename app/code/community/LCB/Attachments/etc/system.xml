@@ -11,7 +11,7 @@
             <label>Attachments</label>
             <tab>lcbrq</tab>
             <frontend_type>text</frontend_type>
-            <sort_order>0</sort_order>
+            <sort_order>999</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>0</show_in_website>
             <show_in_store>0</show_in_store>            
@@ -44,6 +44,20 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <comment>Warning, this setting requires Imagick extension installed on your server</comment>
                         </imagick>
+                        <youtube translate="label">
+                            <label>Allow youtube movies download</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </youtube>
+                        <CSRF translate="label">
+                            <label>Enable CSRF protection for downloads</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </CSRF>
                     </fields>
                 </general>
             </groups>

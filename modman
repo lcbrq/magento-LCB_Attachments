@@ -4,3 +4,4 @@ app/design/frontend/base/default/layout/lcb_attachments.xml     app/design/front
 app/design/frontend/base/default/template/lcb/attachments       app/design/frontend/base/default/template/lcb/attachments
 app/locale/pl_PL/LCB_Attachments.csv                            app/locale/pl_PL/LCB_Attachments.csv
 app/etc/modules/LCB_Attachments.xml                             app/etc/modules/LCB_Attachments.xml 
+lib/Youtube                                                     lib/Youtube

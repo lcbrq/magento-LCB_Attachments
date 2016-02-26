@@ -35,6 +35,12 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
     public function GetAction()
     {
+        
+        $_isValidFormKey = $this->_validateFormKey();
+        if(!$_isValidFormKey &&  Mage::getStoreConfig('attachments/general/CSRF')){
+            return Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl());
+        }
+        
         $productId = $this->getRequest()->getParam('product');
         $ids = $this->getRequest()->getParam('attachments');
         $categoryId = $this->getRequest()->getParam('category');
@@ -93,6 +99,27 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
         foreach ($images as $image) {
             $zip->addFile($image->getPath(), $image->getLabel() . '.' . $image->getMime());
+        }
+
+        $movies = $this->getRequest()->getParam('movies');
+        if ($movies) {
+            $ytDownloader = Mage::getBaseDir('lib') . DS . 'Youtube' . DS . 'youtube-dl.class.php';
+            require($ytDownloader);
+            foreach ($movies as $movie => $id) {
+                try {
+                    $mytube = new yt_downloader();
+                    $mytube->set_youtube($movie);
+                    $mytube->set_video_quality(1);
+                    $mytube->set_thumb_size('s');
+                    $download = $mytube->download_video();
+                    $video = $mytube->get_video();
+                    $thumb = $mytube->get_thumb();
+                    $path = Mage::getBaseDir('media') . DS . "attachments" . DS . 'youtube' . DS . $video;
+                    $zip->addFile($path, $video);
+                } catch (Exception $e) {
+                  
+                }
+            }
         }
 
         $zip->close();
