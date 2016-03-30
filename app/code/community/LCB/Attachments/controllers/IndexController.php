@@ -88,7 +88,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                         continue;
                     }
                     $mime = pathinfo($image->getPath(), PATHINFO_EXTENSION);
-                    if (empty($image->getLabel())) {
+                    if (!$image->getLabel()) {
                         $image->setLabel($product->getName() . $image->getId());
                     }
                     $image->setMime($mime);

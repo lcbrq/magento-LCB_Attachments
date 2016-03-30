@@ -60,7 +60,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
                     }
                 }
 
-                if (empty($image->getLabel())) {
+                if (!$image->getLabel()) {
                     $image->setLabel($product->getName());
                 }
 
