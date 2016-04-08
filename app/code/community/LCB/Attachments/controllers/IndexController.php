@@ -33,14 +33,19 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $this->renderLayout();
     }
 
+    /**
+     * Download attachments zip
+     * 
+     * @return void
+     */
     public function GetAction()
     {
-        
+
         $_isValidFormKey = $this->_validateFormKey();
-        if(!$_isValidFormKey &&  Mage::getStoreConfig('attachments/general/CSRF')){
+        if (!$_isValidFormKey && Mage::getStoreConfig('attachments/general/CSRF')) {
             return Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl());
         }
-        
+
         $productId = $this->getRequest()->getParam('product');
         $ids = $this->getRequest()->getParam('attachments');
         $categoryId = $this->getRequest()->getParam('category');
@@ -101,11 +106,11 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
             $zip->addFile($image->getPath(), $image->getLabel() . '.' . $image->getMime());
         }
 
-        $movies = $this->getRequest()->getParam('movies');
-        if ($movies) {
+        $ytmovies = $this->getRequest()->getParam('ytmovies');
+        if ($ytmovies) {
             $ytDownloader = Mage::getBaseDir('lib') . DS . 'Youtube' . DS . 'youtube-dl.class.php';
             require($ytDownloader);
-            foreach ($movies as $movie => $id) {
+            foreach ($ytmovies as $movie => $id) {
                 try {
                     $mytube = new yt_downloader();
                     $mytube->set_youtube($movie);
@@ -117,10 +122,29 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                     $path = Mage::getBaseDir('media') . DS . "attachments" . DS . 'youtube' . DS . $video;
                     $zip->addFile($path, $video);
                 } catch (Exception $e) {
-                  
+                    
                 }
             }
         }
+
+        $movies = $this->getRequest()->getParam('movies');
+        if ($movies) {
+            foreach ($movies as $id => $movie) {
+                try {
+                    $fileName = basename($movie);
+                    $downloadDir = Mage::getBaseDir('media') . '/attachments/movies/';
+                    $filePath = $downloadDir . $fileName;
+                    if (!file_exists($filePath)) {
+                        $video = file_get_contents($movie);
+                        file_put_contents($filePath, $video);
+                    }
+                    $zip->addFile($filePath, $fileName);
+                } catch (Exception $e) {
+                    
+                }
+            }
+        }
+
 
         $zip->close();
         $response = $this->getResponse();
@@ -136,6 +160,25 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $response->setBody(readfile($file));
         $response->sendResponse();
         unlink($file);
+    }
+
+    /**
+     * Download single file with form key protection
+     * 
+     * @return void
+     */
+    public function DownloadAction()
+    {
+        $fileUrl = $this->getRequest()->getParam('url');
+        $formKey = $this->getRequest()->getParam('form_key');
+        if (!empty($formKey) && $formKey == Mage::getSingleton('core/session')->getFormKey()) {
+            $fileUrl = base64_decode($fileUrl);
+            $fileName = basename($fileUrl);
+            header("Content-disposition: attachment; filename=$fileName");
+            header("Content-type: application/octet-stream");
+            readfile($fileUrl);
+            exit();
+        }
     }
 
 }

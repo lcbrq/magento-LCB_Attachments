@@ -39,3 +39,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.1.7
 
 * Added support for youtube downloads (based on Stephan Schmitz yt_downloader) and CSRF protection
+
+### 1.1.8
+
+* Added support for direct movie url render and download
