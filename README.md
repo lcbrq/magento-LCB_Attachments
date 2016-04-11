@@ -43,3 +43,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.1.8
 
 * Added support for direct movie url render and download
+
+### 1.1.9
+
+* Added store filter for attachments category methods

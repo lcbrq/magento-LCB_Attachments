@@ -34,9 +34,13 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
      * 
      * @return LCB_Attachments_Model_Resource_Attachment_Collection
      */
-    public function getAttachments()
+    public function getAttachments($store = false)
     {
-        return Mage::getModel('lcb_attachments/attachment')->getCollection()->addFieldToFilter('category', $this->getId());
+        $attachments = Mage::getModel('lcb_attachments/attachment')->getCollection()->addFieldToFilter('category', $this->getId());
+        if ($store) {
+            $attachments->addStoreFilter($store);
+        }
+        return $attachments;
     }
 
     /**

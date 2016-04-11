@@ -136,9 +136,12 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
      * @param int $categoryId
      * @return LCB_Attachments_Model_Resource_Attachment_Collection  $attachments
      */
-    public function getAttachments($categoryId)
+    public function getAttachments($categoryId, $store = false)
     {
         $attachments = Mage::getModel('lcb_attachments/category')->load($categoryId)->getAttachments();
+        if ($store) {
+            $attachments->addStoreFilter($store);
+        }
         return $attachments;
     }
 

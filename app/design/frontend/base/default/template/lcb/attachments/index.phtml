@@ -5,12 +5,12 @@ $attachments = Mage::getModel('lcb_attachments/attachment')->getCollection();
 
 <?php
 foreach ($categories as $category):
-    $attachments = $category->getAttachments();
+    $attachments = $category->getAttachments(Mage::app()->getStore()->getId());
     if ($attachments->count() > 0):
         ?>
-        <h2><?php echo $category->getName(); ?></h2>
+        <h2><?php echo $this->__($category->getName()); ?></h2>
         <?php
-        foreach ($category->getAttachments() as $attachment):
+        foreach ($attachments as $attachment):
             ?>
             <h4>
                 <a href="<?php echo $attachment->getUrl(); ?>">
