@@ -18,13 +18,23 @@ class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract {
     {
         $product = Mage::registry('current_product');
         if ($product && $product->getId()) {
-            $attachment = Mage::getModel('lcb_attachments/product')->load($product->getId(), 'product_id');
-            if ($attachment->getId()) {
+            $data = Mage::getModel('lcb_attachments/product')->load($product->getId(), 'product_id');
+            if ($data->getId()) {
                 return 'lcb/attachments/catalog/product/tab.phtml';
             }
         }
 
         return false;
+    }
+    
+    /**
+     * Get all attachments categories
+     * 
+     * @return LCB_Attachments_Model_Resource_Category_Collection
+     */
+    public function getCategories()
+    {
+        return Mage::getModel('lcb_attachments/category')->getCollection();
     }
 
 }

@@ -28,7 +28,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
         $fieldset->addField('file', 'file', array(
             'label' => Mage::helper('lcb_attachments')->__('File'),
             'name' => 'file',
-            'note' => '(*.pdf, *.txt, *.jpg, *.png, *.gif)',
+            'note' => '(*.pdf, *.txt, *.jpg, *.png, *.gif, *.mp4, *.avi)',
         ));
 
         $fieldset->addField('category', 'select', array(
@@ -55,7 +55,6 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
                 'name' => 'stores[]',
                 'value' => Mage::app()->getStore(true)->getId()
             ));
-            $model->setStoreId(Mage::app()->getStore(true)->getId());
         }
 
         if (Mage::getSingleton("adminhtml/session")->getAttachmentData()) {

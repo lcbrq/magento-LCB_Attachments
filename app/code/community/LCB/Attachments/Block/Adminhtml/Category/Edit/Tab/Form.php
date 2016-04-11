@@ -16,12 +16,17 @@ class LCB_Attachments_Block_Adminhtml_Category_Edit_Tab_Form extends Mage_Adminh
         $this->setForm($form);
         $fieldset = $form->addFieldset("attachments_form", array("legend" => Mage::helper("lcb_attachments")->__("Item information")));
 
-
         $fieldset->addField("name", "text", array(
             "label" => Mage::helper("lcb_attachments")->__("Name"),
+            "class" => 'required-entry',
             "name" => "name",
         ));
 
+        $fieldset->addField('display', 'select', array(
+            "label" => Mage::helper("lcb_attachments")->__("Display"),
+            "values" => Mage::getModel('lcb_attachments/category')->getDisplayOptionArray(),
+            "name" => 'display',
+        ));
 
         if (Mage::getSingleton("adminhtml/session")->getCategoryData()) {
             $form->setValues(Mage::getSingleton("adminhtml/session")->getCategoryData());

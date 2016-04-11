@@ -24,7 +24,7 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
     {
         $this->_title($this->__("Attachments"));
         $this->_title($this->__("Manager Attachment"));
-        
+
         $this->_initAction();
         $this->renderLayout();
     }
@@ -96,9 +96,10 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                 //save attachment
                 try {
 
-                    if ((bool) $post_data['file']['delete'] == 1) {
+                    if (isset($post_data['file']['delete']) && (bool) $post_data['file']['delete'] == 1) {
 
                         $post_data['file'] = '';
+                        
                     } else {
 
                         unset($post_data['file']);
@@ -116,14 +117,13 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                                 }
                                 $path = Mage::getBaseDir('media') . DS . 'attachments' . DS;
                                 $uploader = new Varien_File_Uploader('file');
-                                $uploader->setAllowedExtensions(array('jpg', 'png', 'gif', 'pdf', 'gif'));
+                                $uploader->setAllowedExtensions(array('jpg', 'png', 'gif', 'pdf', 'gif', 'txt', 'mp4', 'avi'));
                                 $uploader->setAllowRenameFiles(false);
                                 $uploader->setFilesDispersion(false);
                                 $destFile = $path . $_FILES['file']['name'];
                                 $filename = $uploader->getNewFileName($destFile);
-                                $uploader->save($path, $filename);
-
-                                $post_data['file'] = str_replace(' ', '_', $filename);
+                                $result = $uploader->save($path, $filename);
+                                $post_data['file'] = $result['file'];
                             }
                         }
                     }
@@ -132,7 +132,6 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                     $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('attachment_id')));
                     return;
                 }
-//save attachment
 
                 $model = Mage::getModel("lcb_attachments/attachment")
                         ->addData($post_data)

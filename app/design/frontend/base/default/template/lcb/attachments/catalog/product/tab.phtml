@@ -1,20 +1,33 @@
 <?php
+$attachments = $this->getAttachments();
 $product = Mage::registry('current_product');
+$categories = array();
 if ($product && $product->getId()):
     $attachments = Mage::getModel('lcb_attachments/product')->getCollection()->addFieldToFilter('product_id', $product->getId());
     if ($attachments->count() > 0):
-        ?>
-        <ul>
-            <?php
-            foreach ($attachments as $attachment):
-                $attachment = Mage::getModel('lcb_attachments/attachment')->load($attachment->getId());
-                $category = Mage::getModel('lcb_attachments/category')->load($attachment->getCategory());
-                ?>
-                <h4><?php echo $category->getName(); ?></h4>
-                <li><a href="<?php echo $attachment->getUrl(); ?>"><?php echo $attachment->getTitle(); ?></a></li>    
-            <?php endforeach; ?>
-        </ul>
-        <?php
+        foreach ($attachments as $attachment):
+            $attachment = Mage::getModel('lcb_attachments/attachment')->load($attachment->getAttachmentId());
+            $storeIds = array_filter($attachment->getStoreId());
+            if (!empty($storeIds)) {
+                if (in_array(Mage::app()->getStore()->getId(), $storeIds)) {
+                    $categories[$attachment->getCategory()][] = $attachment;
+                }
+            } else {
+                $categories[$attachment->getCategory()][] = $attachment;
+            }
+        endforeach;
+        foreach ($categories as $category => $attachments):
+            $category = Mage::getModel('lcb_attachments/category')->load($category);
+            ?>
+            <h4><?php echo $this->__($category->getName()); ?></h4>
+            <ul>
+                <?php foreach ($attachments as $attachment):
+                    ?>
+                    <li><a href="<?php echo $attachment->getUrl(); ?>"><?php echo $attachment->getTitle(); ?></a></li>    
+                <?php endforeach; ?>
+            </ul>
+            <br/>
+        <?php endforeach;
     endif;
 endif;
 ?>
