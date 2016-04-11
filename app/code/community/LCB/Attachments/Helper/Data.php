@@ -18,8 +18,8 @@ class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract {
     {
         $product = Mage::registry('current_product');
         if ($product && $product->getId()) {
-            $attachment = Mage::getModel('lcb_attachments/product')->load($product->getId(), 'product_id');
-            if ($attachment->getId()) {
+            $data = Mage::getModel('lcb_attachments/product')->load($product->getId(), 'product_id');
+            if ($data->getId()) {
                 return 'lcb/attachments/catalog/product/tab.phtml';
             }
         }

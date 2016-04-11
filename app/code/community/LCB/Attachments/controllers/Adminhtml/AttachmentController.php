@@ -96,9 +96,10 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                 //save attachment
                 try {
 
-                    if ((bool) $post_data['file']['delete'] == 1) {
+                    if (isset($post_data['file']['delete']) && (bool) $post_data['file']['delete'] == 1) {
 
                         $post_data['file'] = '';
+                        
                     } else {
 
                         unset($post_data['file']);

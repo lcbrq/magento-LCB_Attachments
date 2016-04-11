@@ -3,7 +3,7 @@ Magento attachments plugin with attachment type and multistore support
  
 ## Version
 
-###1.1.3
+###1.2.0
 
 ## Changelog
 
@@ -47,3 +47,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.1.9
 
 * Added store filter for attachments category methods
+
+### 1.2.0
+
+* Store filter fixes for product tab. Version bump for 1.2.0 release
