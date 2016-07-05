@@ -91,7 +91,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
             $width = $resize[0];
             $height = $resize[1];
             $resized = $this->_absolutePath . "/resized/$width/$height" . DS . $fileName;
-            if (!file_exists($resized) && file_exists($imagePath && !dir($imagePath))) {
+            if (!file_exists($resized) && file_exists($imagePath) && !dir($imagePath)) {
                 $image = new Varien_Image($imagePath);
                 $image->resize($width, $height);
                 $image->save($resized);
