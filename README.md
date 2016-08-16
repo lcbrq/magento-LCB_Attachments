@@ -51,3 +51,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.2.0
 
 * Store filter fixes for product tab. Version bump for 1.2.0 release
+
+### 1.2.1
+
+* Fixed direct attachment download url for Windows systems

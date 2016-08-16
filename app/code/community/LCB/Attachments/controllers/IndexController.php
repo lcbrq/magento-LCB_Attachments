@@ -173,6 +173,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $formKey = $this->getRequest()->getParam('form_key');
         if (!empty($formKey) && $formKey == Mage::getSingleton('core/session')->getFormKey()) {
             $fileUrl = base64_decode($fileUrl);
+            $fileUrl = str_replace(" ", "%20", $fileUrl);
             $fileName = basename($fileUrl);
             header("Content-disposition: attachment; filename=$fileName");
             header("Content-type: application/octet-stream");
