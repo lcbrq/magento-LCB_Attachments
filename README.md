@@ -3,7 +3,7 @@ Magento attachments plugin with attachment type and multistore support
  
 ## Version
 
-###1.2.0
+###1.2.2
 
 ## Changelog
 
@@ -55,3 +55,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.2.1
 
 * Fixed direct attachment download url for Windows systems
+
+### 1.2.2
+
+* Fire event before mass image download and headers already sent fix

@@ -97,13 +97,18 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                         $image->setLabel($product->getName() . $image->getId());
                     }
                     $image->setMime($mime);
+                    $image->setFilename($image->getLabel() . '.' . $image->getMime());
+                    Mage::dispatchEvent('attachments_image_zip_before', array(
+                        'image' => $image,
+                        'product' => $product
+                    ));
                     $images[] = $image;
                 }
             }
         }
-
+        
         foreach ($images as $image) {
-            $zip->addFile($image->getPath(), $image->getLabel() . '.' . $image->getMime());
+            $zip->addFile($image->getPath(), $image->getFilename());
         }
 
         $ytmovies = $this->getRequest()->getParam('ytmovies');
@@ -157,8 +162,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $response->setHeader('Content-Length', filesize($file));
         $response->setHeader('Content-type', 'application/zip');
         $this->getResponse()->sendHeaders();
-        $response->setBody(readfile($file));
-        $response->sendResponse();
+        $response->setBody(file_get_contents($file));
         unlink($file);
     }
 
