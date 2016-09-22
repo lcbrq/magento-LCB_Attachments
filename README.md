@@ -59,3 +59,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.2.2
 
 * Fire event before mass image download and headers already sent fix
+
+### 1.2.3
+
+* Added category view

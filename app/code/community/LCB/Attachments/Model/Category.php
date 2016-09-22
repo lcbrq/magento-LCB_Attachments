@@ -62,4 +62,16 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
         );
     }
 
+    /**
+     * Get category url
+     * 
+     * @return string
+     */
+   public function getUrl() {
+        if (parent::getUrl()) {
+            return parent::getUrl();
+        }
+        return Mage::getUrl('downloads/category/view', array('id' => $this->getId()));
+    }
+
 }

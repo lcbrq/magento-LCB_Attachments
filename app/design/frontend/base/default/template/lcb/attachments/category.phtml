@@ -1,0 +1,29 @@
+<?php
+/** 
+ * @var $this LCB_Attachments_Block_Category
+ */
+$category = $this->getCategory();
+?>
+<h1>
+    <?php echo $category->getName(); ?>
+</h1>
+<?php
+$attachments = $category->getAttachments(Mage::app()->getStore()->getId());
+if ($attachments->count() > 0):
+    ?>
+    <ul>
+        <?php
+        foreach ($attachments as $attachment):
+            ?>
+
+            <li>
+                <a href="<?php echo $attachment->getUrl(); ?>">
+                    <?php echo $attachment->getTitle(); ?>
+                </a>
+            </li>
+
+        <?php endforeach; ?>
+    </ul>
+
+<?php endif;
+?>
