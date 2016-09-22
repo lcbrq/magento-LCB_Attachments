@@ -149,14 +149,24 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                 }
             }
         }
-
-
+       
         $zip->close();
+        
+        $archive = new Varien_Object();
+        $archive->setProducts($products);
+        $archive->setImages($images);
+        $archive->setMovies($movies);
+        $archive->setFilename('download.zip');
+        
+        Mage::dispatchEvent('attachments_image_zip_after', array(
+            'archive' => $archive
+        ));
+        
         $response = $this->getResponse();
         $response->setHeader('HTTP/1.1 200 OK', '');
         $response->setHeader('Pragma', 'public', true);
         $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
-        $response->setHeader('Content-Disposition', 'attachment; filename="download.zip"');
+        $response->setHeader('Content-Disposition', 'attachment; filename="'.$archive->getFilename().'"');
         $response->setHeader('Last-Modified', date('r'));
         $response->setHeader('Accept-Ranges', 'bytes');
         $response->setHeader('Content-Length', filesize($file));
