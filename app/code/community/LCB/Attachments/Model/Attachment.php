@@ -45,6 +45,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     /**
      * Get attachment image
      * 
+     * @param array $resize
      * @return string $imageUrl
      */
     public function getImage($resize = false)
@@ -105,11 +106,12 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     /**
      * Alias for getImage()
      *
+     * @param array $resize
      * @return string Image url
      */
-    public function getThumbnail()
+    public function getThumbnail($resize = array(50,50))
     {
-        return $this->getImage();
+        return $this->getImage($resize);
     }
 
     /**
