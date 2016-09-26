@@ -43,14 +43,15 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
         return $attachments;
     }
 
-    /**
+   /**
      * Get display options for select
      * 
      * @return array
      */
     public function getDisplayOptionArray()
     {
-        return array(
+
+        $displayOptions = array(
             array(
                 'value' => 'small',
                 'label' => Mage::helper("lcb_attachments")->__("Small tiles"),
@@ -60,6 +61,10 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
                 'label' => Mage::helper("lcb_attachments")->__("Big tiles"),
             )
         );
+
+        $this->setDisplayOptions($displayOptions);
+        Mage::dispatchEvent('attachments_get_category_display_options', array('category' => $this));
+        return $this->getDisplayOptions();
     }
 
     /**
