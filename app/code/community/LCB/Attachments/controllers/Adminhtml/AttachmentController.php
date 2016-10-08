@@ -92,8 +92,10 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
         if ($post_data) {
 
             try {
-
-                //save attachment
+               
+                /**
+                 * Save attachment
+                 */
                 try {
 
                     if (isset($post_data['file']['delete']) && (bool) $post_data['file']['delete'] == 1) {
@@ -117,7 +119,7 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                                 }
                                 $path = Mage::getBaseDir('media') . DS . 'attachments' . DS;
                                 $uploader = new Varien_File_Uploader('file');
-                                $uploader->setAllowedExtensions(array('jpg', 'png', 'gif', 'pdf', 'gif', 'txt', 'mp4', 'avi'));
+                                $uploader->setAllowedExtensions(array('jpg', 'png', 'gif', 'pdf', 'eps', 'txt', 'mp4', 'avi'));
                                 $uploader->setAllowRenameFiles(false);
                                 $uploader->setFilesDispersion(false);
                                 $destFile = $path . $_FILES['file']['name'];
@@ -133,6 +135,48 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                     return;
                 }
 
+                /**
+                 * Save image for preview
+                 */
+                try {
+
+                    if (isset($post_data['image']['delete']) && (bool) $post_data['image']['delete'] == 1) {
+
+                        $post_data['image'] = '';
+                        
+                    } else {
+
+                        unset($post_data['image']);
+
+                        if (isset($_FILES)) {
+
+                            if ($_FILES['image']['name']) {
+
+                                if ($this->getRequest()->getParam("attachment_id")) {
+                                    $model = Mage::getModel("lcb_attachments/attachment")->load($this->getRequest()->getParam("attachment_id"));
+                                    if ($model->getData('image')) {
+                                        $io = new Varien_Io_File();
+                                        $io->rm(Mage::getBaseDir('media') . DS . implode(DS, explode('/', $model->getData('image'))));
+                                    }
+                                }
+                                $path = Mage::getBaseDir('media') . DS . 'attachments' . DS . 'images'. DS;
+                                $uploader = new Varien_File_Uploader('image');
+                                $uploader->setAllowedExtensions(array('jpg', 'png', 'gif'));
+                                $uploader->setAllowRenameFiles(false);
+                                $uploader->setFilesDispersion(false);
+                                $destFile = $path . $_FILES['image']['name'];
+                                $filename = $uploader->getNewFileName($destFile);
+                                $result = $uploader->save($path, $filename);
+                                $post_data['image'] = 'attachments' . DS . 'images' . DS . $result['file'];
+                            }
+                        }
+                    }
+                } catch (Exception $e) {
+                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                    $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('attachment_id')));
+                    return;
+                }
+                
                 $model = Mage::getModel("lcb_attachments/attachment")
                         ->addData($post_data)
                         ->setAttachmentId($this->getRequest()->getParam("attachment_id"))

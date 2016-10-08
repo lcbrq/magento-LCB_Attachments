@@ -51,6 +51,10 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     public function getImage($resize = false)
     {
 
+        if(!$this->isImageable()){
+            return Mage::app()->getStore(Mage::app()->getStore())->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . parent::getImage();
+        }
+        
         $imageUrl = null;
         $imagePath = null;
         $fileName = $this->getFile();
@@ -143,6 +147,20 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     public function getExtension()
     {
         return pathinfo($this->getUrl(), PATHINFO_EXTENSION);
+    }
+    
+    /**
+     * Check if attachment could be rendered as image
+     * 
+     * @return boolean
+     */
+    public function isImageable()
+    {
+        if (in_array($this->getExtension(), $this->_supportedImages) || ($this->_enableImagick && $this->getExtension() == "pdf")) {
+            return true;
+        }
+
+        return false;
     }
 
 }

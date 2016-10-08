@@ -64,3 +64,7 @@ Magento attachments plugin with attachment type and multistore support
 
 * Added category view
 * Added additional event for download filename adjustment
+
+### 1.2.4
+
+* Better support for not image attachments type

@@ -16,13 +16,18 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
         $this->setForm($form);
         $fieldset = $form->addFieldset("attachments_form", array("legend" => Mage::helper("lcb_attachments")->__("Item information")));
 
-
         $fieldset->addField("title", "text", array(
             "label" => Mage::helper("lcb_attachments")->__("Title"),
             "name" => "title",
             'required' => true,
         ));
 
+        $fieldset->addField("caption", "text", array(
+            "label" => Mage::helper("lcb_attachments")->__("Caption"),
+            "name" => "caption",
+            'note' => "Optional",
+            'required' => false,
+        ));        
 
         $fieldset->addType('file', Mage::getConfig()->getBlockClassName('lcb_attachments/adminhtml_attachment_helper_file'));
         $fieldset->addField('file', 'file', array(
@@ -30,6 +35,14 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
             'name' => 'file',
             'note' => '(*.pdf, *.txt, *.jpg, *.png, *.gif, *.mp4, *.avi)',
         ));
+        
+        if (Mage::registry("attachment_data") && Mage::registry("attachment_data")->getFile() && !Mage::registry("attachment_data")->isImageable()) {
+            $fieldset->addField('image', 'image', array(
+                'label' => Mage::helper('lcb_attachments')->__('Preview image'),
+                'name' => 'image',
+                'note' => '(*.jpg, *.png, *.gif)',
+            ));
+        }
 
         $fieldset->addField('category', 'select', array(
             'label' => Mage::helper('lcb_attachments')->__('Category'),
