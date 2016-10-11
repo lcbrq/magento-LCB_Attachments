@@ -28,6 +28,8 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                 "label" => $this->__("Downloads"),
                 "title" => $this->__("Downloads")
             ));
+            
+            $breadcrumbs->setTitle($this->__("Downloads"));
         }
 
         $this->renderLayout();
