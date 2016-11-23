@@ -11,6 +11,37 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
     public function IndexAction()
     {
+        
+        /**
+         * Universal download handler
+         */
+        if ($this->getRequest()->getParam('id') && $this->getRequest()->getParam('type')) {
+            $file = new Varien_Object;
+            $file->setId($this->getRequest()->getParam('id'));
+            $file->setType($this->getRequest()->getParam('type'));
+            Mage::dispatchEvent('attachments_download_handler', array(
+                'file' => $file
+            ));
+
+            if ($file->getPath()) {
+
+                $content = file_get_contents($file->getPath(), true);
+
+                if ($content) {
+                    $response = $this->getResponse();
+                    $response->setHeader('HTTP/1.1 200 OK', '');
+                    $response->setHeader('Pragma', 'public', true);
+                    $response->setHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"');
+                    $response->setHeader('Last-Modified', date('r'));
+                    $response->setHeader('Accept-Ranges', 'bytes');
+                    $response->setHeader('Content-Length', strlen($content));
+                    $response->setHeader('Content-type', $file->getContentType());
+                    $response->setBody($content);
+                    $response->sendHeaders();
+                    return;
+                }
+            }
+        }
 
         $this->loadLayout();
         $this->getLayout()->getBlock("head")->setTitle($this->__("Downloads"));
