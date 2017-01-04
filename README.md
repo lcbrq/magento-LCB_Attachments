@@ -1,9 +1,10 @@
 # LCB_Attachments
+
 Magento attachments plugin with attachment type and multistore support
  
 ## Version
 
-###1.2.0
+###1.2.6
 
 ## Changelog
 
@@ -51,3 +52,28 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.2.0
 
 * Store filter fixes for product tab. Version bump for 1.2.0 release
+
+### 1.2.1
+
+* Fixed direct attachment download url for Windows systems
+
+### 1.2.2
+
+* Fire event before mass image download and headers already sent fix
+
+### 1.2.3
+
+* Added category view
+* Added additional event for download filename adjustment
+
+### 1.2.4
+
+* Better support for not image attachments type
+
+### 1.2.5
+
+* Add handler for universal file download
+
+### 1.2.6
+
+* Possibility to enable/disable particular attachments and category attachments sort

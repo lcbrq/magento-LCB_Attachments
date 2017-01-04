@@ -11,6 +11,37 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
     public function IndexAction()
     {
+        
+        /**
+         * Universal download handler
+         */
+        if ($this->getRequest()->getParam('id') && $this->getRequest()->getParam('type')) {
+            $file = new Varien_Object;
+            $file->setId($this->getRequest()->getParam('id'));
+            $file->setType($this->getRequest()->getParam('type'));
+            Mage::dispatchEvent('attachments_download_handler', array(
+                'file' => $file
+            ));
+
+            if ($file->getPath()) {
+
+                $content = file_get_contents($file->getPath(), true);
+
+                if ($content) {
+                    $response = $this->getResponse();
+                    $response->setHeader('HTTP/1.1 200 OK', '');
+                    $response->setHeader('Pragma', 'public', true);
+                    $response->setHeader('Content-Disposition', 'attachment; filename="' . $file->getName() . '"');
+                    $response->setHeader('Last-Modified', date('r'));
+                    $response->setHeader('Accept-Ranges', 'bytes');
+                    $response->setHeader('Content-Length', strlen($content));
+                    $response->setHeader('Content-type', $file->getContentType());
+                    $response->setBody($content);
+                    $response->sendHeaders();
+                    return;
+                }
+            }
+        }
 
         $this->loadLayout();
         $this->getLayout()->getBlock("head")->setTitle($this->__("Downloads"));
@@ -28,6 +59,8 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                 "label" => $this->__("Downloads"),
                 "title" => $this->__("Downloads")
             ));
+            
+            $breadcrumbs->setTitle($this->__("Downloads"));
         }
 
         $this->renderLayout();
@@ -97,13 +130,18 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                         $image->setLabel($product->getName() . $image->getId());
                     }
                     $image->setMime($mime);
+                    $image->setFilename($image->getLabel() . '.' . $image->getMime());
+                    Mage::dispatchEvent('attachments_image_zip_before', array(
+                        'image' => $image,
+                        'product' => $product
+                    ));
                     $images[] = $image;
                 }
             }
         }
-
+        
         foreach ($images as $image) {
-            $zip->addFile($image->getPath(), $image->getLabel() . '.' . $image->getMime());
+            $zip->addFile($image->getPath(), $image->getFilename());
         }
 
         $ytmovies = $this->getRequest()->getParam('ytmovies');
@@ -144,21 +182,30 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                 }
             }
         }
-
-
+       
         $zip->close();
+        
+        $archive = new Varien_Object();
+        $archive->setProducts($products);
+        $archive->setImages($images);
+        $archive->setMovies($movies);
+        $archive->setFilename('download.zip');
+        
+        Mage::dispatchEvent('attachments_image_zip_after', array(
+            'archive' => $archive
+        ));
+        
         $response = $this->getResponse();
         $response->setHeader('HTTP/1.1 200 OK', '');
         $response->setHeader('Pragma', 'public', true);
         $response->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
-        $response->setHeader('Content-Disposition', 'attachment; filename="download.zip"');
+        $response->setHeader('Content-Disposition', 'attachment; filename="'.$archive->getFilename().'"');
         $response->setHeader('Last-Modified', date('r'));
         $response->setHeader('Accept-Ranges', 'bytes');
         $response->setHeader('Content-Length', filesize($file));
         $response->setHeader('Content-type', 'application/zip');
         $this->getResponse()->sendHeaders();
-        $response->setBody(readfile($file));
-        $response->sendResponse();
+        $response->setBody(file_get_contents($file));
         unlink($file);
     }
 
@@ -173,6 +220,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $formKey = $this->getRequest()->getParam('form_key');
         if (!empty($formKey) && $formKey == Mage::getSingleton('core/session')->getFormKey()) {
             $fileUrl = base64_decode($fileUrl);
+            $fileUrl = str_replace(" ", "%20", $fileUrl);
             $fileName = basename($fileUrl);
             header("Content-disposition: attachment; filename=$fileName");
             header("Content-type: application/octet-stream");

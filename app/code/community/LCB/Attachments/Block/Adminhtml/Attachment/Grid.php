@@ -52,6 +52,13 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Grid extends Mage_Adminhtml_Blo
             "index" => "category",
             'renderer' => 'LCB_Attachments_Block_Adminhtml_Attachment_Renderer_Category',
         ));
+        
+        $this->addColumn("is_active", array(
+            "header" => Mage::helper("lcb_attachments")->__("Active"),
+            "index" => "is_active",
+            "type" => "options",
+            "options" => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray()
+        ));
 
         if (!Mage::app()->isSingleStoreMode()) {
             $this->addColumn('store_id', array(

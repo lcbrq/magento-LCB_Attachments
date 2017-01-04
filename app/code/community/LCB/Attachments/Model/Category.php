@@ -34,23 +34,27 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
      * 
      * @return LCB_Attachments_Model_Resource_Attachment_Collection
      */
-    public function getAttachments($store = false)
+    public function getAttachments($store = false, $sort = false)
     {
         $attachments = Mage::getModel('lcb_attachments/attachment')->getCollection()->addFieldToFilter('category', $this->getId());
         if ($store) {
             $attachments->addStoreFilter($store);
         }
+        if ($sort) {
+            $attachments->addStoreFilter($store)->setOrder($sort, 'ASC');
+        }
         return $attachments;
     }
 
-    /**
+   /**
      * Get display options for select
      * 
      * @return array
      */
     public function getDisplayOptionArray()
     {
-        return array(
+
+        $displayOptions = array(
             array(
                 'value' => 'small',
                 'label' => Mage::helper("lcb_attachments")->__("Small tiles"),
@@ -60,6 +64,22 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
                 'label' => Mage::helper("lcb_attachments")->__("Big tiles"),
             )
         );
+
+        $this->setDisplayOptions($displayOptions);
+        Mage::dispatchEvent('attachments_get_category_display_options', array('category' => $this));
+        return $this->getDisplayOptions();
+    }
+
+    /**
+     * Get category url
+     * 
+     * @return string
+     */
+   public function getUrl() {
+        if (parent::getUrl()) {
+            return parent::getUrl();
+        }
+        return Mage::getUrl('downloads/category/view', array('id' => $this->getId()));
     }
 
 }

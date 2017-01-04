@@ -19,7 +19,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Helper_File extends Varien_Data
         if ($this->getValue()) {
             $url = $this->_getUrl();
             if (!preg_match("/^http\:\/\/|https\:\/\//", $url)) {
-                $url = Mage::getBaseUrl('media') . 'attachments' . '/' . $url; //replace this with the path to the file if you upload it somewhere else
+                $url = Mage::getBaseUrl('media') . 'attachments' . '/' . $url;
             }
             $html .= '<br /><a href="' . $url . '">' . $this->_getUrl() . '</a> ';
         }

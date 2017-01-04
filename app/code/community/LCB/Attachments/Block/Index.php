@@ -131,7 +131,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
     }
 
     /**
-     * Get attachments within specific category id
+     * Get active attachments within specific category id
      * 
      * @param int $categoryId
      * @return LCB_Attachments_Model_Resource_Attachment_Collection  $attachments
@@ -142,6 +142,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
         if ($store) {
             $attachments->addStoreFilter($store);
         }
+        $attachments->addFieldToFilter('is_active', true);
         return $attachments;
     }
 

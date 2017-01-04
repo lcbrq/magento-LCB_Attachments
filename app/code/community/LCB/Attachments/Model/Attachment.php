@@ -45,11 +45,16 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     /**
      * Get attachment image
      * 
+     * @param array $resize
      * @return string $imageUrl
      */
     public function getImage($resize = false)
     {
 
+        if(!$this->isImageable()){
+            return Mage::app()->getStore(Mage::app()->getStore())->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . parent::getImage();
+        }
+        
         $imageUrl = null;
         $imagePath = null;
         $fileName = $this->getFile();
@@ -91,7 +96,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
             $width = $resize[0];
             $height = $resize[1];
             $resized = $this->_absolutePath . "/resized/$width/$height" . DS . $fileName;
-            if (!file_exists($resized) && file_exists($imagePath && !dir($imagePath))) {
+            if (!file_exists($resized) && file_exists($imagePath) && !dir($imagePath)) {
                 $image = new Varien_Image($imagePath);
                 $image->resize($width, $height);
                 $image->save($resized);
@@ -105,11 +110,12 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     /**
      * Alias for getImage()
      *
+     * @param array $resize
      * @return string Image url
      */
-    public function getThumbnail()
+    public function getThumbnail($resize = array(50,50))
     {
-        return $this->getImage();
+        return $this->getImage($resize);
     }
 
     /**
@@ -141,6 +147,20 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     public function getExtension()
     {
         return pathinfo($this->getUrl(), PATHINFO_EXTENSION);
+    }
+    
+    /**
+     * Check if attachment could be rendered as image
+     * 
+     * @return boolean
+     */
+    public function isImageable()
+    {
+        if (in_array($this->getExtension(), $this->_supportedImages) || ($this->_enableImagick && $this->getExtension() == "pdf")) {
+            return true;
+        }
+
+        return false;
     }
 
 }

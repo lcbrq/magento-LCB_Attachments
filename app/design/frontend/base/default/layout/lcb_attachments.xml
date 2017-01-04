@@ -10,6 +10,18 @@
             <block type="lcb_attachments/index" name="lcb.downloads" template="lcb/attachments/index.phtml" />
         </reference> 
     </lcb_attachments_index_index>
+    
+    <lcb_attachments_category_view>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="lcb_attachments/category" name="lcb.downloads.category" template="lcb/attachments/category.phtml" />
+        </reference> 
+    </lcb_attachments_category_view>
+    
     <catalog_product_view>
         <reference name="product.info">
             <block type="catalog/product_view_tabs" name="product.info.tabs" as="info_tabs" template="catalog/product/view/tabs.phtml" >
