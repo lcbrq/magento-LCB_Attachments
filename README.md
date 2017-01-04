@@ -77,3 +77,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.2.6
 
 * Possibility to enable/disable particular attachments and category attachments sort
+
+### 1.2.7
+
+Add is attachment active check to default templates

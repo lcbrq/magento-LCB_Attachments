@@ -7,6 +7,9 @@ if ($product && $product->getId()):
     if ($attachments->count() > 0):
         foreach ($attachments as $attachment):
             $attachment = Mage::getModel('lcb_attachments/attachment')->load($attachment->getAttachmentId());
+            if(!$attachment->getIsActive()){
+                continue;
+            }
             $storeIds = array_filter($attachment->getStoreId());
             if (!empty($storeIds)) {
                 if (in_array(Mage::app()->getStore()->getId(), $storeIds)) {

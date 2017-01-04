@@ -8,7 +8,7 @@ $category = $this->getCategory();
     <?php echo $category->getName(); ?>
 </h1>
 <?php
-$attachments = $category->getAttachments(Mage::app()->getStore()->getId());
+$attachments = $category->getAttachments(Mage::app()->getStore()->getId())>addFieldToFilter('is_active', true);
 if ($attachments->count() > 0):
     ?>
     <ul>
