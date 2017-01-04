@@ -5,7 +5,7 @@ $attachments = Mage::getModel('lcb_attachments/attachment')->getCollection();
 
 <?php
 foreach ($categories as $category):
-    $attachments = $category->getAttachments(Mage::app()->getStore()->getId());
+    $attachments = $category->getAttachments(Mage::app()->getStore()->getId())->addFieldToFilter('is_active', true);
     if ($attachments->count() > 0):
         ?>
         <h2><?php echo $this->__($category->getName()); ?></h2>
