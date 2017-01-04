@@ -16,6 +16,12 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
         $this->setForm($form);
         $fieldset = $form->addFieldset("attachments_form", array("legend" => Mage::helper("lcb_attachments")->__("Item information")));
 
+        $fieldset->addField('is_active', 'select', array(
+            'label' => Mage::helper('slides')->__('Active'),
+            'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
+            'name' => 'is_active'
+        ));
+        
         $fieldset->addField("title", "text", array(
             "label" => Mage::helper("lcb_attachments")->__("Title"),
             "name" => "title",
