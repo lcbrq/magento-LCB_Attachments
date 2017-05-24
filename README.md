@@ -81,3 +81,7 @@ Magento attachments plugin with attachment type and multistore support
 ### 1.2.7
 
 Add is attachment active check to default templates
+
+### 1.2.8
+
+Hotfix invalid slide dependency and add jpeg as allowed upload extension

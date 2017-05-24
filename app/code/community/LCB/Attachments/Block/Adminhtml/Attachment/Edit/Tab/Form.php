@@ -17,7 +17,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
         $fieldset = $form->addFieldset("attachments_form", array("legend" => Mage::helper("lcb_attachments")->__("Item information")));
 
         $fieldset->addField('is_active', 'select', array(
-            'label' => Mage::helper('slides')->__('Active'),
+            'label' => Mage::helper('lcb_attachments')->__('Active'),
             'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
             'name' => 'is_active'
         ));
@@ -39,7 +39,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
         $fieldset->addField('file', 'file', array(
             'label' => Mage::helper('lcb_attachments')->__('File'),
             'name' => 'file',
-            'note' => '(*.pdf, *.txt, *.jpg, *.png, *.gif, *.mp4, *.avi)',
+            'note' => '(*.pdf, *.txt, *.jpg, *jpeg, *.png, *.gif, *.mp4, *.avi)',
         ));
         
         if (Mage::registry("attachment_data") && Mage::registry("attachment_data")->getFile() && !Mage::registry("attachment_data")->isImageable()) {
