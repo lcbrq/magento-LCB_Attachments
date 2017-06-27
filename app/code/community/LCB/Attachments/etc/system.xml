@@ -45,7 +45,7 @@
                             <comment>Warning, this setting requires Imagick extension installed on your server</comment>
                         </imagick>
                         <youtube translate="label">
-                            <label>Allow youtube movies download</label>
+                            <label>Allow YouTube movies download (beta)</label>
                             <frontend_type>select</frontend_type>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
@@ -60,6 +60,23 @@
                         </CSRF>
                     </fields>
                 </general>
+                <groups translate="label"> 
+                    <label>Groups</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable customer groups restrictions</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enable>
+                    </fields>
+                </groups>
             </groups>
         </attachments>
     </sections>

@@ -12,5 +12,8 @@
 "Default image icon for non image type attachments", "Ikonka załącznika dla plików nie będących obrazkami"
 "Get the thumbnail image from pdf cover", "Pobierz obrazek załącznika dla plików pdf"
 "Warning, this setting requires Imagick extension installed on your server", "Ostrzeżenie, ta opcja wymaga działajacej klasy Imagick na serwerze"
+"Enable CSRF protection for downloads","Włącz zabezpieczenie CSRF"
+"Allow YouTube movies download (beta)","Zezwól na pobieranie plików z YouTube (beta)"
+"Enable customer groups restrictions","Włącz restrykcje grup klientów"
 "Preview image","Obrazek poglądowy"
 "Optional","Opcjonalnie"

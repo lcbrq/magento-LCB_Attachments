@@ -36,5 +36,15 @@ class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract {
     {
         return Mage::getModel('lcb_attachments/category')->getCollection();
     }
+    
+    /**
+     * Check if visibility groups are enabled
+     * 
+     * @return boolean
+     */
+    public function isVisibilityGroupsEnabled()
+    {
+        return Mage::getStoreConfig('attachments/groups/enable');
+    }
 
 }

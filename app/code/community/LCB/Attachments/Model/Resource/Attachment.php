@@ -72,9 +72,8 @@ class LCB_Attachments_Model_Resource_Attachment extends Mage_Core_Model_Resource
     {
         if ($object->getAttachmentId()) {
             $stores = $this->lookupStoreIds($object->getAttachmentId());
-
             $object->setData('store_id', $stores);
-
+            $object->setVisibilityGroups(explode(',', $object->getVisibilityGroups()));
         }
 
         return parent::_afterLoad($object);

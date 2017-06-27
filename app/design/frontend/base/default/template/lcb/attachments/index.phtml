@@ -11,13 +11,15 @@ foreach ($categories as $category):
         <h2><?php echo $this->__($category->getName()); ?></h2>
         <?php
         foreach ($attachments as $attachment):
+            if($attachment->isVisible()):
             ?>
             <h4>
                 <a href="<?php echo $attachment->getUrl(); ?>">
             <?php echo $attachment->getTitle(); ?>
                 </a>
             </h4>
-        <?php endforeach;
+        <?php endif;
+        endforeach;
     endif;
     ?>
 <?php endforeach; ?>

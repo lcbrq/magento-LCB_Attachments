@@ -1,6 +1,6 @@
 # LCB_Attachments
 
-Magento attachments plugin with attachment type and multistore support
+Magento attachments plugin with attachment type, multistore and visibility groups support
  
 ## Version
 
@@ -80,8 +80,12 @@ Magento attachments plugin with attachment type and multistore support
 
 ### 1.2.7
 
-Add is attachment active check to default templates
+* Add is attachment active check to default templates
 
 ### 1.2.8
 
-Hotfix invalid slide dependency and add jpeg as allowed upload extension
+* Hotfix invalid slide dependency and add jpeg as allowed upload extension
+
+### 1.3.0
+
+* Add composer file and visibility groups feature

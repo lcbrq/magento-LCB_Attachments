@@ -88,7 +88,6 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
 
         $post_data = $this->getRequest()->getPost();
 
-
         if ($post_data) {
 
             try {
@@ -175,6 +174,10 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                     Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                     $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('attachment_id')));
                     return;
+                }
+                
+                if (isset($post_data['visibility_groups'])) {
+                    $post_data['visibility_groups'] = implode(',', $post_data['visibility_groups']);
                 }
                 
                 $model = Mage::getModel("lcb_attachments/attachment")

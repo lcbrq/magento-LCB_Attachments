@@ -56,6 +56,15 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
             'name' => 'category',
         ));
 
+        if (Mage::helper('lcb_attachments')->isVisibilityGroupsEnabled()) {
+            $fieldset->addField("visibility_groups", "multiselect", array(
+                'label' => Mage::helper("lcb_attachments")->__("Visibility"),
+                'name' => 'visibility_groups',
+                'values' => Mage::getSingleton('lcb_attachments/system_config_groups')->toOptionArray(),
+                'required' => true
+            ));
+        }
+
         /**
          * Check is single store mode
          */

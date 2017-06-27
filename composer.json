@@ -1,0 +1,16 @@
+{
+    "name": "lcbrq/magento-lcb_attachments",
+    "description": "Magento attachments plugin with attachment type, multistore and visibility groups support",
+    "type": "magento-module",
+    "authors": [
+        {
+            "name": "Silpion Tomasz Gregorczyk",
+            "email": "tom@lcbrq.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {},
+    "extra": {
+        "magento-root-dir":"./"
+    }
+}
