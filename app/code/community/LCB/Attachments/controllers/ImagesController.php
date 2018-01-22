@@ -9,7 +9,7 @@
  */
 class LCB_Attachments_ImagesController extends Mage_Core_Controller_Front_Action {
 
-    public function GetAction()
+    public function getAction()
     {
 
         $imageData = $this->getRequest()->getParam('photos');

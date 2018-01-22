@@ -88,4 +88,4 @@ Magento attachments plugin with attachment type, multistore and visibility group
 
 ### 1.3.0
 
-* Add composer file and visibility groups feature
+* Add composer file, visibility groups feature and minor fixes including proper ACL rules

@@ -9,7 +9,7 @@
  */
 class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action {
 
-    public function IndexAction()
+    public function indexAction()
     {
         
         /**
@@ -71,7 +71,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
      * 
      * @return void
      */
-    public function GetAction()
+    public function getAction()
     {
 
         $_isValidFormKey = $this->_validateFormKey();
@@ -214,7 +214,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
      * 
      * @return void
      */
-    public function DownloadAction()
+    public function downloadAction()
     {
         $fileUrl = $this->getRequest()->getParam('url');
         $formKey = $this->getRequest()->getParam('form_key');

@@ -9,6 +9,11 @@
  */
 class LCB_Attachments_Adminhtml_CategoryController extends Mage_Adminhtml_Controller_Action {
 
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('catalog/attachments/category');
+    }
+    
     protected function _initAction()
     {
         $this->loadLayout()->_setActiveMenu("lcb_attachments/category")->_addBreadcrumb(Mage::helper("adminhtml")->__("Category  Manager"), Mage::helper("adminhtml")->__("Category Manager"));
