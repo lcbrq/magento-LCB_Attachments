@@ -116,4 +116,14 @@
             </modules>
         </translate>
     </frontend>
+    <default>
+        <web>
+            <routers>
+                <lcb_attachments_router>
+                    <area>frontend</area>
+                    <class>LCB_Attachments_Controller_Router</class>
+                </lcb_attachments_router>
+            </routers>
+        </web>
+    </default>
 </config> 
