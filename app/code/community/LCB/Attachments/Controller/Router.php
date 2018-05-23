@@ -23,7 +23,7 @@ class LCB_Attachments_Controller_Router extends Mage_Core_Controller_Varien_Rout
             $pathInfo = explode('/', $request->getPathInfo());
 
             $action = new Varien_Object;
-            $action->setActionName(end($pathInfo));
+            $action->setActionName(urldecode(end($pathInfo)));
 
             Mage::dispatchEvent('attachments_download_action', array(
                 'action' => $action
