@@ -118,7 +118,7 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                                 }
                                 $path = Mage::getBaseDir('media') . DS . 'attachments' . DS;
                                 $uploader = new Varien_File_Uploader('file');
-                                $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'eps', 'txt', 'mp4', 'avi'));
+                                $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'png', 'gif', 'pdf', 'eps', 'txt', 'mp4', 'avi', 'doc', 'docx'));
                                 $uploader->setAllowRenameFiles(false);
                                 $uploader->setFilesDispersion(false);
                                 $destFile = $path . $_FILES['file']['name'];
