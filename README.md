@@ -1,10 +1,10 @@
 # LCB_Attachments
 
-Magento attachments plugin with attachment type, multistore and visibility groups support
+Magento/OpenMage attachments plugin with attachment type, multistore and visibility groups support
  
 ## Version
 
-###1.2.6
+###1.4.0
 
 ## Changelog
 
@@ -89,3 +89,7 @@ Magento attachments plugin with attachment type, multistore and visibility group
 ### 1.3.0
 
 * Add composer file, visibility groups feature and minor fixes including proper ACL rules
+
+### 1.4.0
+
+* Add new extensions, code format and drop deprecated method calls

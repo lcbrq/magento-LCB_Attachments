@@ -1,5 +1,6 @@
 {
     "name": "lcbrq/magento-lcb_attachments",
+    "version": "1.4.0",
     "description": "Magento attachments plugin with attachment type, multistore and visibility groups support",
     "type": "magento-module",
     "authors": [
