@@ -3,8 +3,8 @@
 /**
  * @see http://stackoverflow.com/questions/19288230/how-to-display-uploaded-file-name-in-magento-admin-form
  */
-class LCB_Attachments_Block_Adminhtml_Attachment_Helper_File extends Varien_Data_Form_Element_Abstract {
-
+class LCB_Attachments_Block_Adminhtml_Attachment_Helper_File extends Varien_Data_Form_Element_Abstract
+{
     public function __construct($data)
     {
         parent::__construct($data);
@@ -55,5 +55,4 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Helper_File extends Varien_Data
     {
         return $this->getData('name');
     }
-
 }

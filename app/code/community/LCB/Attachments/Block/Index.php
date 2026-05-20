@@ -7,11 +7,11 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
-
+class LCB_Attachments_Block_Index extends Mage_Core_Block_Template
+{
     /**
      * Get media images from products
-     * 
+     *
      * @return Varien_Data_Collection
      */
     public function getProductImages()
@@ -53,7 +53,6 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
         foreach ($products as $_product) {
             $product = Mage::getModel('catalog/product')->load($_product->getId());
             foreach ($product->getMediaGalleryImages() as $image) {
-
                 if (!empty($photoIds)) {
                     if (!in_array($image->getId(), $photoIds)) {
                         continue;
@@ -79,7 +78,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
 
     /**
      * Get categories to populate first select
-     * 
+     *
      * @return Mage_Catalog_Model_Resource_Category_Collection $categories
      */
     public function getCategories()
@@ -93,7 +92,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
 
     /**
      * Get subcategories to populate second select
-     * 
+     *
      * @return mixed array|Mage_Catalog_Model_Resource_Category_Collection $categories
      */
     public function getSubcategories()
@@ -112,7 +111,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
 
     /**
      * Get subcategories to populate second select
-     * 
+     *
      * @return mixed array|Mage_Catalog_Model_Resource_Product_Collection $products
      */
     public function getProducts()
@@ -132,7 +131,7 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
 
     /**
      * Get active attachments within specific category id
-     * 
+     *
      * @param int $categoryId
      * @return LCB_Attachments_Model_Resource_Attachment_Collection  $attachments
      */
@@ -145,5 +144,4 @@ class LCB_Attachments_Block_Index extends Mage_Core_Block_Template {
         $attachments->addFieldToFilter('is_active', true);
         return $attachments;
     }
-
 }

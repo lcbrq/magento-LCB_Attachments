@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Adminhtml_Category extends Mage_Adminhtml_Block_Widget_Grid_Container {
-
+class LCB_Attachments_Block_Adminhtml_Category extends Mage_Adminhtml_Block_Widget_Grid_Container
+{
     public function __construct()
     {
         $this->_controller = "adminhtml_category";
@@ -17,5 +17,4 @@ class LCB_Attachments_Block_Adminhtml_Category extends Mage_Adminhtml_Block_Widg
         $this->_addButtonLabel = Mage::helper("lcb_attachments")->__("Add New Item");
         parent::__construct();
     }
-
 }

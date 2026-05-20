@@ -2,7 +2,6 @@
 
 class LCB_Attachments_Controller_Router extends Mage_Core_Controller_Varien_Router_Standard
 {
-
     /**
      * Match the request
      *
@@ -11,7 +10,6 @@ class LCB_Attachments_Controller_Router extends Mage_Core_Controller_Varien_Rout
      */
     public function match(Zend_Controller_Request_Http $request)
     {
-
         if (!$this->_beforeModuleMatch()) {
             return false;
         }
@@ -19,10 +17,9 @@ class LCB_Attachments_Controller_Router extends Mage_Core_Controller_Varien_Rout
         $route = $request->getRouteName();
 
         if ($route === 'lcb_attachments') {
-
             $pathInfo = explode('/', $request->getPathInfo());
 
-            $action = new Varien_Object;
+            $action = new Varien_Object();
             $action->setActionName(urldecode(end($pathInfo)));
 
             Mage::dispatchEvent('attachments_download_action', array(
@@ -40,5 +37,4 @@ class LCB_Attachments_Controller_Router extends Mage_Core_Controller_Varien_Rout
 
         return false;
     }
-
 }

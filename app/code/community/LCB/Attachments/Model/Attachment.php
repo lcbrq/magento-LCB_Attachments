@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
-
+class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract
+{
     protected $_absolutePath;
     protected $_urlPath;
     protected $_supportedImages = array(
@@ -34,7 +34,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
     /**
      * Get attachment url
-     * 
+     *
      * @return string
      */
     public function getUrl()
@@ -44,17 +44,16 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
     /**
      * Get attachment image
-     * 
+     *
      * @param array $resize
      * @return string $imageUrl
      */
     public function getImage($resize = false)
     {
-
-        if(!$this->isImageable()){
+        if (!$this->isImageable()) {
             return Mage::app()->getStore(Mage::app()->getStore())->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . parent::getImage();
         }
-        
+
         $imageUrl = null;
         $imagePath = null;
         $fileName = $this->getFile();
@@ -62,7 +61,6 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
 
         if ($this->_enableImagick && $this->getExtension() == "pdf" && class_exists('Imagick')) {
-
             $fileName = substr($fileName, 0, -strlen($extension)) . 'jpg';
             $imagePath = $this->_absolutePath . DS . $fileName;
 
@@ -120,7 +118,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
     /**
      * Get attachment absolute url
-     * 
+     *
      * @return string
      */
     public function getPath()
@@ -130,7 +128,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
     /**
      * Get attachment size
-     * 
+     *
      * @return float file size in kb
      */
     public function getSize()
@@ -140,7 +138,7 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
     /**
      * Get attachment extension
-     * 
+     *
      * @todo database replacement for performance
      * @return string file extension
      */
@@ -148,10 +146,10 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
     {
         return pathinfo($this->getUrl(), PATHINFO_EXTENSION);
     }
-    
+
     /**
      * Check if attachment could be rendered as image
-     * 
+     *
      * @return boolean
      */
     public function isImageable()
@@ -162,27 +160,26 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
         return false;
     }
-    
+
     /**
      * Check if attachment is visible
-     * 
+     *
      * @return boolean
      */
     public function isVisible()
     {
-        
-        if(!Mage::helper('lcb_attachments')->isVisibilityGroupsEnabled()){
+        if (!Mage::helper('lcb_attachments')->isVisibilityGroupsEnabled()) {
             return true;
         }
-        
+
         $visibilityGroups = $this->getVisibilityGroups();
-        
-        $visibility = new Varien_Object;
+
+        $visibility = new Varien_Object();
         $visibility->setIsVisible(true);
-        
+
         if ($visibilityGroups && Mage::getDesign()->getArea() == 'frontend') {
             $visibilityGroups = explode(',', $visibilityGroups);
-            
+
             if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
                 if (!in_array($customerGroupId, $visibilityGroups)) {
@@ -205,5 +202,4 @@ class LCB_Attachments_Model_Attachment extends Mage_Core_Model_Abstract {
 
         return $visibility->getIsVisible();
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
-class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Product extends Mage_Adminhtml_Block_Widget_Grid {
-
+class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Product extends Mage_Adminhtml_Block_Widget_Grid
+{
     /**
      * Set grid params
      *
@@ -165,7 +165,6 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Product extends Mage_A
 
     public function _getSelectedProducts()
     {
-
         $selected = $this->getProducts();
         if (!is_array($selected)) {
             $selected = array();
@@ -178,5 +177,4 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Product extends Mage_A
         }
         return $selected;
     }
-
 }

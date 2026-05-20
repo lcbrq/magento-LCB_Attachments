@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
-
+class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract
+{
     protected function _construct()
     {
         $this->_init("lcb_attachments/category");
@@ -16,7 +16,7 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
 
     /**
      * Get options for attachment form
-     * 
+     *
      * @return array
      */
     public function getOptions()
@@ -31,7 +31,7 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
 
     /**
      * Get category attachments
-     * 
+     *
      * @return LCB_Attachments_Model_Resource_Attachment_Collection
      */
     public function getAttachments($store = false, $sort = false)
@@ -46,14 +46,13 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
         return $attachments;
     }
 
-   /**
-     * Get display options for select
-     * 
-     * @return array
-     */
+    /**
+      * Get display options for select
+      *
+      * @return array
+      */
     public function getDisplayOptionArray()
     {
-
         $displayOptions = array(
             array(
                 'value' => 'small',
@@ -72,14 +71,14 @@ class LCB_Attachments_Model_Category extends Mage_Core_Model_Abstract {
 
     /**
      * Get category url
-     * 
+     *
      * @return string
      */
-   public function getUrl() {
+    public function getUrl()
+    {
         if (parent::getUrl()) {
             return parent::getUrl();
         }
         return Mage::getUrl('downloads/category/view', array('id' => $this->getId()));
     }
-
 }

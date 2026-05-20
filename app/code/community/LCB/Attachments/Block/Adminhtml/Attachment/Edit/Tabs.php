@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs {
-
+class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
+{
     public function __construct()
     {
         parent::__construct();
@@ -34,5 +34,4 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tabs extends Mage_Adminhtm
 
         return parent::_beforeToHtml();
     }
-
 }

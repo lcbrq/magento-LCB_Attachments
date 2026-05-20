@@ -7,11 +7,10 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form {
-
+class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
+{
     protected function _prepareForm()
     {
-
         $form = new Varien_Data_Form();
         $this->setForm($form);
         $fieldset = $form->addFieldset("attachments_form", array("legend" => Mage::helper("lcb_attachments")->__("Item information")));
@@ -21,7 +20,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
             'values' => Mage::getSingleton('adminhtml/system_config_source_yesno')->toArray(),
             'name' => 'is_active'
         ));
-        
+
         $fieldset->addField("title", "text", array(
             "label" => Mage::helper("lcb_attachments")->__("Title"),
             "name" => "title",
@@ -33,7 +32,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
             "name" => "caption",
             'note' => "Optional",
             'required' => false,
-        ));        
+        ));
 
         $fieldset->addType('file', Mage::getConfig()->getBlockClassName('lcb_attachments/adminhtml_attachment_helper_file'));
         $fieldset->addField('file', 'file', array(
@@ -41,7 +40,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
             'name' => 'file',
             'note' => '(*.pdf, *.txt, *.jpg, *jpeg, *.png, *.gif, *.mp4, *.avi, *.doc, *.docx)',
         ));
-        
+
         if (Mage::registry("attachment_data") && Mage::registry("attachment_data")->getFile() && !Mage::registry("attachment_data")->isImageable()) {
             $fieldset->addField('image', 'image', array(
                 'label' => Mage::helper('lcb_attachments')->__('Preview image'),
@@ -93,5 +92,4 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Edit_Tab_Form extends Mage_Admi
         }
         return parent::_prepareForm();
     }
-
 }

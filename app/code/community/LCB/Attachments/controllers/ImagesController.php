@@ -7,11 +7,10 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_ImagesController extends Mage_Core_Controller_Front_Action {
-
+class LCB_Attachments_ImagesController extends Mage_Core_Controller_Front_Action
+{
     public function getAction()
     {
-
         $imageData = $this->getRequest()->getParam('photos');
 
         if ($imageData) {
@@ -66,5 +65,4 @@ class LCB_Attachments_ImagesController extends Mage_Core_Controller_Front_Action
         $response->sendResponse();
         unlink($file);
     }
-
 }

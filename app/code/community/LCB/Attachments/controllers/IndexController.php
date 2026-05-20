@@ -7,16 +7,15 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action {
-
+class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action
+{
     public function indexAction()
     {
-        
         /**
          * Universal download handler
          */
         if ($this->getRequest()->getParam('id') && $this->getRequest()->getParam('type')) {
-            $file = new Varien_Object;
+            $file = new Varien_Object();
             $file->setId($this->getRequest()->getParam('id'));
             $file->setType($this->getRequest()->getParam('type'));
             Mage::dispatchEvent('attachments_download_handler', array(
@@ -24,7 +23,6 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
             ));
 
             if ($file->getPath()) {
-
                 $content = file_get_contents($file->getPath(), true);
 
                 if ($content) {
@@ -48,7 +46,6 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
         $breadcrumbs = $this->getLayout()->getBlock("breadcrumbs");
 
         if ($breadcrumbs) {
-
             $breadcrumbs->addCrumb("home", array(
                 "label" => $this->__("Home Page"),
                 "title" => $this->__("Home Page"),
@@ -59,7 +56,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                 "label" => $this->__("Downloads"),
                 "title" => $this->__("Downloads")
             ));
-            
+
             $breadcrumbs->setTitle($this->__("Downloads"));
         }
 
@@ -68,12 +65,11 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
     /**
      * Download attachments zip
-     * 
+     *
      * @return void
      */
     public function getAction()
     {
-
         $_isValidFormKey = $this->_validateFormKey();
         if (!$_isValidFormKey && Mage::getStoreConfig('attachments/general/CSRF')) {
             return Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl());
@@ -139,7 +135,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                 }
             }
         }
-        
+
         foreach ($images as $image) {
             $zip->addFile($image->getPath(), $image->getFilename());
         }
@@ -160,7 +156,6 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                     $path = Mage::getBaseDir('media') . DS . "attachments" . DS . 'youtube' . DS . $video;
                     $zip->addFile($path, $video);
                 } catch (Exception $e) {
-                    
                 }
             }
         }
@@ -178,23 +173,22 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
                     }
                     $zip->addFile($filePath, $fileName);
                 } catch (Exception $e) {
-                    
                 }
             }
         }
-       
+
         $zip->close();
-        
+
         $archive = new Varien_Object();
         $archive->setProducts($products);
         $archive->setImages($images);
         $archive->setMovies($movies);
         $archive->setFilename('download.zip');
-        
+
         Mage::dispatchEvent('attachments_image_zip_after', array(
             'archive' => $archive
         ));
-        
+
         $response = $this->getResponse();
         $response->setHeader('HTTP/1.1 200 OK', '');
         $response->setHeader('Pragma', 'public', true);
@@ -211,7 +205,7 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
 
     /**
      * Download single file with form key protection
-     * 
+     *
      * @return void
      */
     public function downloadAction()
@@ -228,5 +222,4 @@ class LCB_Attachments_IndexController extends Mage_Core_Controller_Front_Action 
             exit();
         }
     }
-
 }

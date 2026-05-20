@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract {
-
+class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract
+{
     /**
      * Returns path of the related products template file if attachment is found
      *
@@ -26,25 +26,24 @@ class LCB_Attachments_Helper_Data extends Mage_Core_Helper_Abstract {
 
         return false;
     }
-    
+
     /**
      * Get all attachments categories
-     * 
+     *
      * @return LCB_Attachments_Model_Resource_Category_Collection
      */
     public function getCategories()
     {
         return Mage::getModel('lcb_attachments/category')->getCollection();
     }
-    
+
     /**
      * Check if visibility groups are enabled
-     * 
+     *
      * @return boolean
      */
     public function isVisibilityGroupsEnabled()
     {
         return Mage::getStoreConfig('attachments/groups/enable');
     }
-
 }

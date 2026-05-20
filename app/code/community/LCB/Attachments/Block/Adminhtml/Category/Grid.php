@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block_Widget_Grid {
-
+class LCB_Attachments_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block_Widget_Grid
+{
     public function __construct()
     {
         parent::__construct();
@@ -62,5 +62,4 @@ class LCB_Attachments_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block
         ));
         return $this;
     }
-
 }

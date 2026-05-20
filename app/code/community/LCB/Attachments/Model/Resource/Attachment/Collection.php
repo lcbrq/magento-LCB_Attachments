@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Model_Resource_Attachment_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract {
-
+class LCB_Attachments_Model_Resource_Attachment_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+{
     /**
      * Load data for preview flag
      *
@@ -114,7 +114,9 @@ class LCB_Attachments_Model_Resource_Attachment_Collection extends Mage_Core_Mod
     {
         if ($this->getFilter('store')) {
             $this->getSelect()->join(
-                    array('store_table' => $this->getTable('lcb_attachments/store')), 'main_table.attachment_id = store_table.attachment_id', array()
+                array('store_table' => $this->getTable('lcb_attachments/store')),
+                'main_table.attachment_id = store_table.attachment_id',
+                array()
             )->group('main_table.attachment_id');
             /*
              * Allow analytic functions usage because of one field grouping
@@ -123,5 +125,4 @@ class LCB_Attachments_Model_Resource_Attachment_Collection extends Mage_Core_Mod
         }
         return parent::_renderFiltersBefore();
     }
-
 }

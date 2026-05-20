@@ -7,11 +7,10 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Adminhtml_Category_Edit extends Mage_Adminhtml_Block_Widget_Form_Container {
-
+class LCB_Attachments_Block_Adminhtml_Category_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+{
     public function __construct()
     {
-
         parent::__construct();
         $this->_objectId = "id";
         $this->_blockGroup = "lcb_attachments";
@@ -31,10 +30,9 @@ class LCB_Attachments_Block_Adminhtml_Category_Edit extends Mage_Adminhtml_Block
     public function getHeaderText()
     {
         if (Mage::registry("category_data") && Mage::registry("category_data")->getId()) {
-            return Mage::helper("lcb_attachments")->__("Edit Item '%s'", $this->htmlEscape(Mage::registry("category_data")->getId()));
+            return Mage::helper("lcb_attachments")->__("Edit Item '%s'", $this->escapeHtml(Mage::registry("category_data")->getId()));
         } else {
             return Mage::helper("lcb_attachments")->__("Add Item");
         }
     }
-
 }

@@ -7,13 +7,13 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Adminhtml_CategoryController extends Mage_Adminhtml_Controller_Action {
+class LCB_Attachments_Adminhtml_CategoryController extends Mage_Adminhtml_Controller_Action
+{
+    /**
+     * @inheritDoc
+     */
+    public const ADMIN_RESOURCE = 'catalog/attachments/category';
 
-    protected function _isAllowed()
-    {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/attachments/category');
-    }
-    
     protected function _initAction()
     {
         $this->loadLayout()->_setActiveMenu("lcb_attachments/category")->_addBreadcrumb(Mage::helper("adminhtml")->__("Category  Manager"), Mage::helper("adminhtml")->__("Category Manager"));
@@ -54,7 +54,6 @@ class LCB_Attachments_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
 
     public function newAction()
     {
-
         $this->_title($this->__("Attachments"));
         $this->_title($this->__("Category"));
         $this->_title($this->__("New Item"));
@@ -85,11 +84,9 @@ class LCB_Attachments_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
 
     public function saveAction()
     {
-
         $post_data = $this->getRequest()->getPost();
 
         if ($post_data) {
-
             try {
                 $model = Mage::getModel("lcb_attachments/category")
                         ->addData($post_data)
@@ -165,5 +162,4 @@ class LCB_Attachments_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
         $grid = $this->getLayout()->createBlock('lcb_attachments/adminhtml_category_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
-
 }

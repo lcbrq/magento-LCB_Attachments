@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Model_Resource_Attachment extends Mage_Core_Model_Resource_Db_Abstract {
-
+class LCB_Attachments_Model_Resource_Attachment extends Mage_Core_Model_Resource_Db_Abstract
+{
     protected function _construct()
     {
         $this->_init("lcb_attachments/attachment", "attachment_id");
@@ -61,7 +61,7 @@ class LCB_Attachments_Model_Resource_Attachment extends Mage_Core_Model_Resource
         }
         return parent::_afterSave($object);
     }
-    
+
     /**
      * Perform operations after object load
      *
@@ -96,8 +96,10 @@ class LCB_Attachments_Model_Resource_Attachment extends Mage_Core_Model_Resource
                 Mage_Core_Model_App::ADMIN_STORE_ID,
             );
             $select->join(
-                            array('as' => $this->getTable('lcb_attachments/store')), $this->getMainTable() . '.attachment_id = as.attachment_id', array('store_id')
-                    )->where('is_active = ?', 1)
+                array('as' => $this->getTable('lcb_attachments/store')),
+                $this->getMainTable() . '.attachment_id = as.attachment_id',
+                array('store_id')
+            )->where('is_active = ?', 1)
                     ->where('as.store_id in (?) ', $stores)
                     ->order('store_id DESC')
                     ->limit(1);
@@ -122,5 +124,4 @@ class LCB_Attachments_Model_Resource_Attachment extends Mage_Core_Model_Resource
         );
         return $adapter->fetchCol($select, $binds);
     }
-
 }

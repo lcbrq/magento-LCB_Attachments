@@ -7,8 +7,8 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Block_Adminhtml_Attachment_Grid extends Mage_Adminhtml_Block_Widget_Grid {
-
+class LCB_Attachments_Block_Adminhtml_Attachment_Grid extends Mage_Adminhtml_Block_Widget_Grid
+{
     public function __construct()
     {
         parent::__construct();
@@ -52,7 +52,7 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Grid extends Mage_Adminhtml_Blo
             "index" => "category",
             'renderer' => 'LCB_Attachments_Block_Adminhtml_Attachment_Renderer_Category',
         ));
-        
+
         $this->addColumn("is_active", array(
             "header" => Mage::helper("lcb_attachments")->__("Active"),
             "index" => "is_active",
@@ -112,5 +112,4 @@ class LCB_Attachments_Block_Adminhtml_Attachment_Grid extends Mage_Adminhtml_Blo
         ));
         return $this;
     }
-
 }

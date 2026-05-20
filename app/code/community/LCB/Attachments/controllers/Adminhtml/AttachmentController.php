@@ -7,17 +7,17 @@
  * @package    LCB_Attachments
  * @author     Silpion Tomasz Gregorczyk <tom@leftcurlybracket.com>
  */
-class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Controller_Action {
+class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Controller_Action
+{
+    /**
+     * @inheritDoc
+     */
+    public const ADMIN_RESOURCE = 'catalog/attachments/attachment';
 
     protected function _initAction()
     {
         $this->loadLayout()->_setActiveMenu("lcb_attachments/attachment")->_addBreadcrumb(Mage::helper("adminhtml")->__("Attachment  Manager"), Mage::helper("adminhtml")->__("Attachment Manager"));
         return $this;
-    }
-
-    protected function _isAllowed()
-    {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/attachments/attachment');
     }
 
     public function indexAction()
@@ -54,7 +54,6 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
 
     public function newAction()
     {
-
         $this->_title($this->__("Attachments"));
         $this->_title($this->__("Attachment"));
         $this->_title($this->__("New Item"));
@@ -85,30 +84,21 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
 
     public function saveAction()
     {
-
         $post_data = $this->getRequest()->getPost();
 
         if ($post_data) {
-
             try {
-               
                 /**
                  * Save attachment
                  */
                 try {
-
                     if (isset($post_data['file']['delete']) && (bool) $post_data['file']['delete'] == 1) {
-
                         $post_data['file'] = '';
-                        
                     } else {
-
                         unset($post_data['file']);
 
                         if (isset($_FILES)) {
-
                             if ($_FILES['file']['name']) {
-
                                 if ($this->getRequest()->getParam("attachment_id")) {
                                     $model = Mage::getModel("lcb_attachments/attachment")->load($this->getRequest()->getParam("attachment_id"));
                                     if ($model->getData('file')) {
@@ -138,19 +128,13 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                  * Save image for preview
                  */
                 try {
-
                     if (isset($post_data['image']['delete']) && (bool) $post_data['image']['delete'] == 1) {
-
                         $post_data['image'] = '';
-                        
                     } else {
-
                         unset($post_data['image']);
 
                         if (isset($_FILES)) {
-
                             if (isset($_FILES['image']['name']) && $_FILES['image']['name']) {
-
                                 if ($this->getRequest()->getParam("attachment_id")) {
                                     $model = Mage::getModel("lcb_attachments/attachment")->load($this->getRequest()->getParam("attachment_id"));
                                     if ($model->getData('image')) {
@@ -175,11 +159,11 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
                     $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('attachment_id')));
                     return;
                 }
-                
+
                 if (isset($post_data['visibility_groups'])) {
                     $post_data['visibility_groups'] = implode(',', $post_data['visibility_groups']);
                 }
-                
+
                 $model = Mage::getModel("lcb_attachments/attachment")
                         ->addData($post_data)
                         ->setAttachmentId($this->getRequest()->getParam("attachment_id"))
@@ -296,5 +280,4 @@ class LCB_Attachments_Adminhtml_AttachmentController extends Mage_Adminhtml_Cont
 
         $this->renderLayout();
     }
-
 }
